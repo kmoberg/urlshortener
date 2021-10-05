@@ -1,4 +1,6 @@
 .aws
+.idea
+__pycache__
 docker/
 venv/
 .env
