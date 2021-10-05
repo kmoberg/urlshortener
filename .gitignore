@@ -1,0 +1,5 @@
+.aws
+docker/
+venv/
+.env
+database.db
