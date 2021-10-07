@@ -83,8 +83,8 @@ def index():
         flash("Request ID: " + str(response['ResponseMetadata']['RequestId']))
         flash("Short URL: " + short_url)
 
-        return render_template('index.html', short_url=response)
-    return render_template('index.html')
+        return render_template('url/index.html', short_url=response)
+    return render_template('url/index.html')
 
 
 @app.route('/<url>')
@@ -144,7 +144,7 @@ def stats():
     # Get the length of the list - how many URLs have been generated?
     items = len(data)
 
-    return render_template('stats.html', urls=data, items=items, base_url=request.host_url)
+    return render_template('url/stats.html', urls=data, items=items, base_url=request.host_url)
 
 
 if __name__ == '__main__':
