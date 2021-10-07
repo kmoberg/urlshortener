@@ -1,29 +1,35 @@
 version: "3.9"
 services:
-  dynamodb-local:
-    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
-    image: "amazon/dynamodb-local:latest"
-    container_name: dynamodb-local
-    ports:
-      - "8000:8000"
+  db:
+    image: mysql:5.7
     volumes:
-      - "./docker/dynamodb:/home/dynamodblocal/data"
-    working_dir: /home/dynamodblocal
-  url_shortener:
-    build: .
-    container_name: urlshortener
+      - mysql_data:/var/lib/mysql
+    restart: always
     ports:
-      - "5000:5000"
-    depends_on:
-      - "dynamodb-local"
-    links:
-      - "dynamodb-local"
-    volumes:
-      - .:/app
+      - "3306:3306"
     environment:
-      - SECRET_KEY=83lk25j23l45j23oi45u235
-      - ENDPOINT_URL=http://dynamodb-local:8000
-      - AWS_DEFAULT_REGION=localhost
-      - AWS_ACCESS_KEY_ID=ekwt6j
-      - AWS_SECRET_ACCESS_KEY=hdzk5g
-      - FLASK_ENV=development
+      MYSQL_ROOT_PASSWORD: somepassword
+      MYSQL_DATABASE: urlshortener
+      MYSQL_USER: urlshortener
+      MYSQL_PASSWORD: urlshortener
+
+#  url_shortener:
+#    build: .
+#    container_name: urlshortener
+#    ports:
+#      - "5000:5000"
+#    depends_on:
+#      - db
+#    volumes:
+#      - .:/app
+#    environment:
+#      - SECRET_KEY=83lk25j23l45j23oi45u235
+#      - ENDPOINT_URL=http://dynamodb-local:8000
+#      - AWS_DEFAULT_REGION=localhost
+#      - AWS_ACCESS_KEY_ID=ekwt6j
+#      - AWS_SECRET_ACCESS_KEY=hdzk5g
+#      - FLASK_ENV=development
+
+volumes:
+  mysql_data: {}
+

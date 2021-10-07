@@ -9,7 +9,7 @@ def create_app():
     app = Flask(__name__)
 
     app.config['SECRET_KEY'] = '124lk1j25l1h39058uy1084u12l4n13ph4piu23ug'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://urlshortener:urlshortener@localhost/urlshortener'
 
     db.init_app(app)
 
@@ -17,7 +17,7 @@ def create_app():
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
 
-    from .models import User
+    from .models import User, Urls
 
     @login_manager.user_loader
     def load_user(user_id):
