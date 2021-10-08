@@ -29,4 +29,7 @@ def create_app():
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
+    from .url import url as url_blueprint
+    app.register_blueprint(url_blueprint)
+
     return app
